@@ -4,22 +4,21 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
     if(isset($_GET['id'])){
         echo $db->get_event($_GET['id']);
     }else{
-		$hasil = array();
-        $i = 0;
-        $query = $db->all_event();
-		while($data = $query->fetch_assoc()){
-			$hasil[$i] = $data;
-			$i++;
+        $row = $db->all_event();
+        $data = array();
+        while ($tmp = $row->fetch_assoc()) {
+            $data[] = $tmp;
         }
-        echo json_encode($hasil);
+       echo json_encode($data);
+		// echo $db->all_event();
     }
 }else if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if(isset($_POST['id_event']) && $_POST['id_peserta']){
         if($db->cek_daftar($_POST['id_event'], $_POST['id_peserta'])){
             echo "True";
         }else{
-            $db->daftar_event($_POST['id_event'], $_POST['id_peserta']);
-            echo "False";
+            echo $db->daftar_event($_POST['id_event'], $_POST['id_peserta']);
+            // echo "False";
         }
     }
 }else if($_SERVER['REQUEST_METHOD'] === 'DELETE'){

@@ -15,8 +15,6 @@ class database{
 		return json_encode($data);
 	}
 	function all_event(){
-		$date = date("Y-m-d");
-		$time = date("h:i:s");
 		$conn = $this->db();
 		$data = $conn->query("select * from vw_event");
 		return $data;
@@ -41,7 +39,9 @@ class database{
 	}
 	function daftar_event($id_event, $id_peserta){
 		$conn = $this->db();
-		$data = $conn->query("INSERT INTO peserta_event(absen, id_event, id_peserta, id_peserta_event) VALUES ('0','$id_event','$id_peserta','$id_event.$id_event'");
+		$id_peserta_event = $id_peserta.$id_event;
+		$data = $conn->query("INSERT INTO peserta_event(absen, id_event, id_peserta, id_peserta_event) VALUES (0,'$id_event','$id_peserta','$id_peserta_event'");
+		return $data->num_rows;
 	}
 } 
 
